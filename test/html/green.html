@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html class="reftest-wait">
 <body>
+<canvas id="canvas" width="400" height="400">
+    赤い四角形を表示
+</canvas>
+<script>
+    var canvas = document.getElementById('canvas');
+    if(canvas && typeof(canvas.getContext) === 'function') {
+        var ctx = canvas.getContext('2d');
+        if(ctx) {
+            ctx.clearRect(0, 0, 300, 300);
+            ctx.strokeStyle = "#c00";
+            ctx.fillStyle   = "#fcc";
+            ctx.fillRect(50, 50, 200, 200);
+            ctx.strokeRect(50, 50, 200, 200);
+        }
+    }
+
+</script>
+g
 <script>
     window.onload= function(){
         setTimeout(function () {
-            document.body.innerHTML ="ttttt日本語\n"+
-            "あsだsだ<p>テスト</p>";
             document.documentElement.className = "";
         },200);
     }
