@@ -35,16 +35,13 @@ export default class ReftestRunner {
     /**
      * compare results and return the promise.
      * the promise always resolve by IReftestCompareResult.(either passed or failed)
-     * @param {string[]} targets the targets are url of array.
-     * @param {string[]} result the result are base64URL image of screenshots.
+     * @param {{targetA:IReftestURLResult,targetB:IReftestURLResult}} targets the targets are url of array.
      * @returns {Promise} the promise will resolved {@link IReftestCompareResult} object.
      * @private
      */
-    _compareResult(targets, result) {
-        var targetA = targets[0];
-        var targetB = targets[1];
-        var imageA = result[0];
-        var imageB = result[1];
+    _compareResult(targets) {
+        var imageA = targets.targetA.screenshotBase64;
+        var imageB = targets.targetB.screenshotBase64;
         return new Promise((resolve, reject) => {
             var fileName = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss") + ".png";
             var outputScreenshotPath = path.join(this.options.screenshotDirectory, fileName);
@@ -64,14 +61,8 @@ export default class ReftestRunner {
                 var reftestCompareResult = {
                     passed: diff.hasPassed(result.code),
                     differencePoints: result.differences,
-                    targetA: {
-                        URL: targetA,
-                        screenshotBase64: imageA
-                    },
-                    targetB: {
-                        URL: targetB,
-                        screenshotBase64: imageB
-                    }
+                    targetA: targets.targetA,
+                    targetB: targets.targetB
                 };
                 resolve(reftestCompareResult);
             });
@@ -86,8 +77,16 @@ export default class ReftestRunner {
      */
     runTest(URL_A, URL_B) {
         return Promise.all([this._runTestURL(URL_A), this._runTestURL(URL_B)]).then((result) => {
-            var targets = [URL_A, URL_B];
-            return this._compareResult(targets, result);
+            return this._compareResult({
+                targetA: {
+                    URL: URL_A,
+                    screenshotBase64: result[0]
+                },
+                targetB: {
+                    URL: URL_B,
+                    screenshotBase64: result[1]
+                }
+            });
         }).catch(function (error) {
             console.log(error);
             console.log(error.stack);
