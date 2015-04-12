@@ -12,6 +12,7 @@ declare module "reftest-runner" {
     interface IReftestCompareResult {
         passed : boolean;
         differencePoints : number;
+        comparedImagePath? : string;
         targetA: IReftestURLResult;
         targetB: IReftestURLResult;
     }

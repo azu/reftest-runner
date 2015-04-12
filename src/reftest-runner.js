@@ -61,6 +61,7 @@ export default class ReftestRunner {
                 var reftestCompareResult = {
                     passed: diff.hasPassed(result.code),
                     differencePoints: result.differences,
+                    comparedImagePath: diff.hasPassed(result.code) ? null : outputScreenshotPath,
                     targetA: targets.targetA,
                     targetB: targets.targetB
                 };
