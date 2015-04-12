@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+<body>
+<script>
+    window.onload= function(){
+        setTimeout(function () {
+            document.body.innerHTML ="ttttt日本語\n"+
+            "あsだsだ<p>テスト</p>";
+            document.documentElement.className = "";
+        },200);
+    }
+</script>
+</body>
+</html>
