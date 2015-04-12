@@ -13,13 +13,18 @@ var testRunner = new ReftestRunner({
 var testEngine = new ReftestEngine({
     screenshotDirectory: process.cwd() + "/"
 });
-testEngine.runTests([
-    {
-        targetA: 'http://0.0.0.0:8080/green.html',
-        targetB: 'http://0.0.0.0:8080/red.html',
-        compareOperator: "=="
-    }
-]).then(function (resultList) {
+var parse = require("reftest-list-parser").parse;
+var fs = require("fs");
+var path = require("path");
+var filePath = __dirname + "/../test/reftest.list";
+var data = fs.readFileSync(filePath, "utf-8");
+var list = parse(data);
+var baseDir = path.dirname(filePath);
+testEngine.runTests(list.map(function (item) {
+    item.targetA = path.resolve(baseDir, item.targetA);
+    item.targetB = path.resolve(baseDir, item.targetB);
+    return item;
+})).then(function (resultList) {
     var formatter = testEngine.getReporter();
     var output = formatter(resultList);
     console.log(output);
