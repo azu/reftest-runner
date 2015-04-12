@@ -1,7 +1,7 @@
 // LICENSE : MIT
 "use strict";
 import ContentRunner from "./runner/content-runner"
-import Webdriver from "selenium-webdriver"
+import webdriver from "selenium-webdriver"
 import BlinkDiff from "blink-diff"
 import Promise from "bluebird"
 import path from "path"
@@ -18,6 +18,17 @@ export default class ReftestRunner {
         this.options = options;
     }
 
+    _openDriver() {
+        var options = webdriver.Capabilities.phantomjs();
+        return new webdriver.Builder()
+            .withCapabilities(options)
+            .build();
+    }
+
+    _closeDriver(driver) {
+        driver.quit();
+    }
+
     /**
      *
      * @param URL
@@ -25,15 +36,14 @@ export default class ReftestRunner {
      * @private
      */
     _runTestURL(URL) {
-        var driver = new Webdriver.Builder().
-            withCapabilities(Webdriver.Capabilities.phantomjs()).
-            build();
+        var driver = this._openDriver();
         var contentRunner = new ContentRunner(driver);
-        var close = function (args) {
-            driver.quit();
+        var close = (args)=> {
+            this._closeDriver(driver);
             return args;
         };
-        return contentRunner.getScreenShotAsync(URL).then(close, close);
+        return contentRunner.getScreenShotAsync(URL)
+            .then(close, close);
     }
 
     /**
