@@ -18,7 +18,7 @@ testEngine.runTests([
         compareOperator: "=="
     }
 ]).then(function (resultList) {
-    var formatter = testEngine.getFormatter();
+    var formatter = testEngine.getReporter();
     var output = formatter(resultList);
     console.log(output);
 });

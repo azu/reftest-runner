@@ -10,6 +10,10 @@ import dateFormat from 'dateformat'
  * @constructor
  */
 export default class ReftestRunner {
+    /**
+     *
+     * @param {IReftestOption} options
+     */
     constructor(options) {
         this.options = options;
     }

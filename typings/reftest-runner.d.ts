@@ -1,9 +1,9 @@
 declare module "reftest-runner" {
     interface IReftestOption {
         browser: string;
-        port: number;
-        logDirectory: string;
-        screenshotDirectory: string;
+        port?: number;
+        logDirectory?: string;
+        screenshotDirectory?: string;
     }
     interface IReftestURLResult {
         URL : string;
@@ -15,6 +15,11 @@ declare module "reftest-runner" {
         comparedImagePath? : string;
         targetA: IReftestURLResult;
         targetB: IReftestURLResult;
+    }
+    interface IReftestEngineTarget {
+        targetA: string;
+        targetB: string;
+        compareOperator: string;
     }
     export class ReftestRunner {
         constructor(options:IReftestOption);

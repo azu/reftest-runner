@@ -19,22 +19,28 @@ export default class ReftestEngine {
         return result;
     }
 
-    runTests(testList) {
+    /**
+     * run test and return result promise which is filled with array of result.
+     * @param {IReftestEngineTarget[]} testTargetList the targetList is defined URL and compareOperator for each test.
+     * @returns {Promise.<IReftestCompareResult[]>}
+     */
+    runTests(testTargetList) {
         var runner = new TestRunner({
             screenshotDirectory: process.cwd() + "/"
         });
-        var taskPromiseList = testList.map(function (testTarget) {
+        var taskPromiseList = testTargetList.map(function (testTarget) {
             return runner.runTest(testTarget.targetA, testTarget.targetB)
         });
         return Promise.all(taskPromiseList).then((resultList) => {
             return resultList.map((result, index) => {
-                var targetItem = testList[index];
+                var targetItem = testTargetList[index];
                 return this._computeResultOperator(result, targetItem.compareOperator);
             })
         });
     }
 
-    getFormatter(formatterName) {
-        return require("./formmater/tap-formatter");
+    getReporter(reporterName) {
+        // TODO: implement other reporter
+        return require("./reporter/tap-formatter");
     }
 }
