@@ -7,8 +7,8 @@
 import TestRunner from "./reftest-runner"
 import Promise from "bluebird"
 export default class ReftestEngine {
-    constructor() {
-
+    constructor(options) {
+        this.options = options;
     }
 
     _computeResultOperator(result, compareOperator) {
@@ -25,9 +25,7 @@ export default class ReftestEngine {
      * @returns {Promise.<IReftestCompareResult[]>}
      */
     runTests(testTargetList) {
-        var runner = new TestRunner({
-            screenshotDirectory: process.cwd() + "/"
-        });
+        var runner = new TestRunner(this.options);
         var taskPromiseList = testTargetList.map(function (testTarget) {
             return runner.runTest(testTarget.targetA, testTarget.targetB)
         });

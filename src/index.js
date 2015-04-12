@@ -10,7 +10,9 @@ var testRunner = new ReftestRunner({
 //}).catch(function (error) {
 //
 //});
-var testEngine = new ReftestEngine();
+var testEngine = new ReftestEngine({
+    screenshotDirectory: process.cwd() + "/"
+});
 testEngine.runTests([
     {
         targetA: 'http://0.0.0.0:8080/green.html',
