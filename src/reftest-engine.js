@@ -11,6 +11,25 @@ export default class ReftestEngine {
         this.options = options;
     }
 
+    _setupServer() {
+        return new Promise((resolve, reject)=> {
+            require("./server/static-server")(this.options, (error, server)=> {
+                console.log(server);
+                if (error) {
+                    return reject(new Error("Fail setup server"));
+                }
+                this.server = server;
+                resolve();
+            });
+        });
+    }
+
+    _closeServer() {
+        if (this.server) {
+            this.server.close();
+        }
+    }
+
     _computeResultOperator(result, compareOperator) {
         // reverser result
         if (compareOperator === "!=") {
@@ -25,6 +44,17 @@ export default class ReftestEngine {
      * @returns {Promise.<IReftestCompareResult[]>}
      */
     runTests(testTargetList) {
+        var close = (result)=> {
+            this._closeServer();
+            return result;
+        };
+        return this._setupServer()
+            .then(this._runTest.bind(this, testTargetList))
+            .then(close, close);
+    }
+
+    _runTest(testTargetList) {
+        console.log(testTargetList);
         var runner = new TestRunner(this.options);
         var taskPromiseList = testTargetList.map(function (testTarget) {
             return runner.runTest(testTarget.targetA, testTarget.targetB)
