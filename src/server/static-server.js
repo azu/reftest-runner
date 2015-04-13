@@ -1,11 +1,13 @@
 // LICENSE : MIT
 "use strict";
 var staticServer = require('node-static');
+var assert = require("assert");
 /**
  * @param {IReftestOption} options
  * @param {Function} callback the callback should called when finish setup server.
  */
 module.exports = function (options, callback) {
+    assert(options && options.server && options.server.port != null, "require options.server.port");
     var fileServer = new staticServer.Server(options.rootDir);
     var server = require('http').createServer(function (request, response) {
         request.addListener('end', function () {
@@ -19,7 +21,7 @@ module.exports = function (options, callback) {
                 }
             });
         }).resume();
-    }).listen(8083);
+    }).listen(options.server.port);
     // finish setup callback
     callback(null, server);
 };

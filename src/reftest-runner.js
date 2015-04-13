@@ -38,9 +38,12 @@ export default class ReftestRunner {
     _runTestURL(URL) {
         var driver = this._openDriver();
         var contentRunner = new ContentRunner(driver);
-        var close = (args)=> {
+        var close = (result)=> {
+            if(result instanceof Error) {
+                return Promise.reject(result);
+            }
             this._closeDriver(driver);
-            return args;
+            return result;
         };
         return contentRunner.getScreenShotAsync(URL)
             .then(close, close);

@@ -1,9 +1,12 @@
 declare module "reftest-runner" {
+    interface IReftestServerOption {
+        port : number;
+    }
     interface IReftestOption {
         browser: string;
         port?: number;
         rootDir:string;
-        server?: string;
+        server : IReftestServerOption;
         logDir?: string;
         screenshotDir?: string;
     }

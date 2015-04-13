@@ -14,7 +14,6 @@ export default class ReftestEngine {
     _setupServer() {
         return new Promise((resolve, reject)=> {
             require("./server/static-server")(this.options, (error, server)=> {
-                console.log(server);
                 if (error) {
                     return reject(new Error("Fail setup server"));
                 }
@@ -22,6 +21,15 @@ export default class ReftestEngine {
                 resolve();
             });
         });
+    }
+
+    /**
+     *
+     * @param {IReftestEngineTarget} testTargetList
+     * @private
+     */
+    _resolveFileList(testTargetList) {
+        return testTargetList.map();
     }
 
     _closeServer() {
@@ -45,6 +53,9 @@ export default class ReftestEngine {
      */
     runTests(testTargetList) {
         var close = (result)=> {
+            if(result instanceof Error) {
+                return Promise.reject(result);
+            }
             this._closeServer();
             return result;
         };
@@ -53,8 +64,13 @@ export default class ReftestEngine {
             .then(close, close);
     }
 
+    /**
+     *
+     * @param {IReftestEngineTarget[]} testTargetList
+     * @returns {Promise.<T>}
+     * @private
+     */
     _runTest(testTargetList) {
-        console.log(testTargetList);
         var runner = new TestRunner(this.options);
         var taskPromiseList = testTargetList.map(function (testTarget) {
             return runner.runTest(testTarget.targetA, testTarget.targetB)
