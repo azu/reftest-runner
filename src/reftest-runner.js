@@ -6,6 +6,8 @@ import BlinkDiff from "blink-diff"
 import Promise from "bluebird"
 import path from "path"
 import dateFormat from 'dateformat'
+import pathUtil from "./utils/path-utls"
+
 /**
  * @constructor
  */
@@ -39,7 +41,7 @@ export default class ReftestRunner {
         var driver = this._openDriver();
         var contentRunner = new ContentRunner(driver);
         var close = (result)=> {
-            if(result instanceof Error) {
+            if (result instanceof Error) {
                 return Promise.reject(result);
             }
             this._closeDriver(driver);
@@ -60,7 +62,9 @@ export default class ReftestRunner {
         var imageA = targets.targetA.screenshotBase64;
         var imageB = targets.targetB.screenshotBase64;
         return new Promise((resolve, reject) => {
-            var fileName = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss") + ".png";
+            var prefix = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss");
+            var vsTitle = pathUtil.getFileName(targets.targetA.URL) + "-vs-" + pathUtil.getFileName(targets.targetB.URL);
+            var fileName = prefix + "-" + vsTitle + ".png";
             var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
             var diff = new BlinkDiff({
                 imageA: new Buffer(imageA, 'base64'),

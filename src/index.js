@@ -6,7 +6,7 @@ var testEngine = new ReftestEngine({
     server: {
         port: 8989
     },
-    rootDir: __dirname + "/../",// rootDir for file sesrver
+    rootDir: __dirname + "/../",// rootDir for file server
     screenshotDir: process.cwd() + "/"
 });
 var reftestListPath = __dirname + "/../test/reftest.list";
