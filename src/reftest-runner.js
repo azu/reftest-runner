@@ -1,5 +1,9 @@
 // LICENSE : MIT
 "use strict";
+/*
+    reftest-runner treat a single test.
+    passing targetSet, then return result.
+ */
 import ContentRunner from "./runner/content-runner"
 import webdriver from "selenium-webdriver"
 import BlinkDiff from "blink-diff"
@@ -54,16 +58,16 @@ export default class ReftestRunner {
     /**
      * compare results and return the promise.
      * the promise always resolve by IReftestCompareResult.(either passed or failed)
-     * @param {{targetA:IReftestURLResult,targetB:IReftestURLResult}} targets the targets are url of array.
+     * @param {{targetA:IReftestURLResult,targetB:IReftestURLResult}} targetSet the targets are url of array.
      * @returns {Promise} the promise will resolved {@link IReftestCompareResult} object.
      * @private
      */
-    _compareResult(targets) {
-        var imageA = targets.targetA.screenshotBase64;
-        var imageB = targets.targetB.screenshotBase64;
+    _compareResult(targetSet) {
+        var imageA = targetSet.targetA.screenshotBase64;
+        var imageB = targetSet.targetB.screenshotBase64;
         return new Promise((resolve, reject) => {
             var prefix = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss");
-            var vsTitle = pathUtil.getFileName(targets.targetA.URL) + "-vs-" + pathUtil.getFileName(targets.targetB.URL);
+            var vsTitle = pathUtil.getFileName(targetSet.targetA.URL) + "-vs-" + pathUtil.getFileName(targetSet.targetB.URL);
             var fileName = prefix + "-" + vsTitle + ".png";
             var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
             var diff = new BlinkDiff({
@@ -83,8 +87,8 @@ export default class ReftestRunner {
                     passed: diff.hasPassed(result.code),
                     differencePoints: result.differences,
                     comparedImagePath: diff.hasPassed(result.code) ? null : outputScreenshotPath,
-                    targetA: targets.targetA,
-                    targetB: targets.targetB
+                    targetA: targetSet.targetA,
+                    targetB: targetSet.targetB
                 };
                 resolve(reftestCompareResult);
             });
