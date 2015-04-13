@@ -58,7 +58,7 @@ export default class ReftestRunner {
         var imageB = targets.targetB.screenshotBase64;
         return new Promise((resolve, reject) => {
             var fileName = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss") + ".png";
-            var outputScreenshotPath = path.join(this.options.screenshotDirectory, fileName);
+            var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
             var diff = new BlinkDiff({
                 imageA: new Buffer(imageA, 'base64'),
                 imageB: new Buffer(imageB, 'base64'),

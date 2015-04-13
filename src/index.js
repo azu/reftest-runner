@@ -3,7 +3,7 @@
 import ReftestRunner from "./reftest-runner"
 import ReftestEngine from "./reftest-engine"
 var testRunner = new ReftestRunner({
-    screenshotDirectory: process.cwd() + "/ss"
+    screenshotDir: process.cwd() + "/ss"
 });
 //testRunner.runTest('http://0.0.0.0:8080/green.html', 'http://0.0.0.0:8080/red.html').then(function (result) {
 //    console.log(result);
@@ -11,7 +11,7 @@ var testRunner = new ReftestRunner({
 //
 //});
 var testEngine = new ReftestEngine({
-    screenshotDirectory: process.cwd() + "/"
+    screenshotDir: process.cwd() + "/"
 });
 var parse = require("reftest-list-parser").parse;
 var fs = require("fs");

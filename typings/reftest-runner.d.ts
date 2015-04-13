@@ -2,8 +2,10 @@ declare module "reftest-runner" {
     interface IReftestOption {
         browser: string;
         port?: number;
-        logDirectory?: string;
-        screenshotDirectory?: string;
+        root
+        server?: string;
+        logDir?: string;
+        screenshotDir?: string;
     }
     interface IReftestURLResult {
         URL : string;
