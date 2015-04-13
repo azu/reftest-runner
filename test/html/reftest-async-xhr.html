@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html class="reftest-wait">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+    var req = new XMLHttpRequest();
+    req.open("get", "./test.txt", false);
+    req.onload = function (event) {
+        var responseText = req.responseText;
+        document.documentElement.className = "";
+        document.body.innerHTML = '<h1>' + responseText + '</h1>';
+    };
+    req.send();
+</script>
+</body>
+</html>
