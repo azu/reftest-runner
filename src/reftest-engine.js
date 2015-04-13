@@ -46,6 +46,23 @@ export default class ReftestEngine {
         return result;
     }
 
+
+    getTargetListFromFile(reftestListFilePath) {
+        var parse = require("reftest-list-parser").parse;
+        var fs = require("fs");
+        var path = require("path");
+        var data = fs.readFileSync(reftestListFilePath, "utf-8");
+        var list = parse(data);
+        var baseDir = path.dirname(reftestListFilePath);
+        // resolve path from `rootDir`
+        return list.map((item)=> {
+            item.targetA = path.resolve(baseDir, item.targetA);
+            item.targetB = path.resolve(baseDir, item.targetB);
+            return item;
+        })
+
+    }
+
     /**
      * run test and return result promise which is filled with array of result.
      * @param {IReftestEngineTarget[]} testTargetList the targetList is defined URL and compareOperator for each test.
@@ -53,14 +70,18 @@ export default class ReftestEngine {
      */
     runTests(testTargetList) {
         var close = (result)=> {
-            if(result instanceof Error) {
+            if (result instanceof Error) {
                 return Promise.reject(result);
             }
             this._closeServer();
             return result;
         };
+        var resolve = require("./utils/option-utils").resolveTargetPath;
+        var resolvedTargetList = testTargetList.map((target)=> {
+            return resolve(target, this.options);
+        });
         return this._setupServer()
-            .then(this._runTest.bind(this, testTargetList))
+            .then(this._runTest.bind(this, resolvedTargetList))
             .then(close, close);
     }
 
