@@ -11,7 +11,7 @@ import Promise from "bluebird"
 import path from "path"
 import dateFormat from 'dateformat'
 import pathUtil from "./utils/path-utils.js"
-
+import mkdirp from "mkdirp"
 /**
  * @constructor
  */
@@ -70,6 +70,8 @@ export default class ReftestRunner {
             var vsTitle = pathUtil.basename(targetSet.targetA.URL) + "-vs-" + pathUtil.basename(targetSet.targetB.URL);
             var fileName = prefix + "-" + vsTitle + ".png";
             var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
+            // if exist screenshotDir, then create directory.
+            mkdirp.sync(this.options.screenshotDir);
             var diff = new BlinkDiff({
                 imageA: new Buffer(imageA, 'base64'),
                 imageB: new Buffer(imageB, 'base64'),
