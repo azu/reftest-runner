@@ -1,6 +1,5 @@
 // LICENSE : MIT
 "use strict";
-import ReftestRunner from "./reftest-runner"
 import ReftestEngine from "./reftest-engine"
 var testEngine = new ReftestEngine({
     server: {
