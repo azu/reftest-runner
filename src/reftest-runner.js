@@ -12,6 +12,10 @@ import path from "path"
 import dateFormat from 'dateformat'
 import pathUtil from "./utils/path-utils.js"
 import mkdirp from "mkdirp"
+import ObjectAssign from "object-assign"
+import defaultOptions from "./options/default-options"
+var debug = require("debug")("reftest-runner");
+
 /**
  * @constructor
  */
@@ -21,7 +25,7 @@ export default class ReftestRunner {
      * @param {IReftestOption} options
      */
     constructor(options) {
-        this.options = options;
+        this.options = ObjectAssign(defaultOptions, options);
     }
 
     _openDriver() {

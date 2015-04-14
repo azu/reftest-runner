@@ -6,9 +6,11 @@
  */
 import TestRunner from "./reftest-runner"
 import Promise from "bluebird"
+import ObjectAssign from "object-assign"
+import defaultOptions from "./options/default-options"
 export default class ReftestEngine {
     constructor(options) {
-        this.options = options;
+        this.options = ObjectAssign(defaultOptions, options);
     }
 
     _setupServer() {
