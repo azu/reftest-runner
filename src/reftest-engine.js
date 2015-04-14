@@ -8,6 +8,7 @@ import TestRunner from "./reftest-runner"
 import Promise from "bluebird"
 import ObjectAssign from "object-assign"
 import defaultOptions from "./options/default-options"
+var debug = require("debug")("reftest-engine");
 export default class ReftestEngine {
     constructor(options) {
         this.options = ObjectAssign(defaultOptions, options);
@@ -82,8 +83,9 @@ export default class ReftestEngine {
         var resolvedTargetList = testTargetList.map((target)=> {
             return resolve(target, this.options);
         });
+        debug("TargetList: %o", testTargetList);
         return this._setupServer()
-            .then(this._runTest.bind(this, resolvedTargetList))
+            .then(this._runTests.bind(this, resolvedTargetList))
             .then(close, close);
     }
 
@@ -93,7 +95,7 @@ export default class ReftestEngine {
      * @returns {Promise.<T>}
      * @private
      */
-    _runTest(testTargetList) {
+    _runTests(testTargetList) {
         var runner = new TestRunner(this.options);
         var taskPromiseList = testTargetList.map(function (testTarget) {
             return runner.runTest(testTarget.targetA, testTarget.targetB)

@@ -14,7 +14,6 @@ import pathUtil from "./utils/path-utils.js"
 import mkdirp from "mkdirp"
 import ObjectAssign from "object-assign"
 import defaultOptions from "./options/default-options"
-var debug = require("debug")("reftest-runner");
 
 /**
  * @constructor
