@@ -3,10 +3,10 @@
 var staticServer = require('node-static');
 var assert = require("assert");
 /**
+ * @param {EventEmitter} emitter
  * @param {IReftestOption} options
- * @param {Function} callback the callback should called when finish setup server.
  */
-module.exports = function (options, callback) {
+module.exports = function (emitter, options) {
     assert(options && options.server && options.server.port != null, "require options.server.port");
     var fileServer = new staticServer.Server(options.rootDir);
     var server = require('http').createServer(function (request, response) {
@@ -22,7 +22,10 @@ module.exports = function (options, callback) {
             });
         }).resume();
     }).listen(options.server.port);
+    // when reftest-runner emit "close", then sever should be closed.
+    emitter.on("close", function(){
+       server.close()
+    });
     // finish setup callback
-    callback(null, server);
+    emitter.emit("connection");
 };
-

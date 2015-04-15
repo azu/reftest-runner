@@ -4,25 +4,26 @@
     - engine treat multiple files.
     - engine is wrapped of runner.
  */
-import TestRunner from "./reftest-runner"
 import Promise from "bluebird"
 import ObjectAssign from "object-assign"
+import TestRunner from "./reftest-runner"
 import defaultOptions from "./options/default-options"
+import {EventEmitter} from "events"
+import assert from "assert"
 var debug = require("debug")("reftest-engine");
 export default class ReftestEngine {
     constructor(options) {
         this.options = ObjectAssign(defaultOptions, options);
+        this.serverEmitter = new EventEmitter();
     }
 
     _setupServer() {
         return new Promise((resolve, reject)=> {
-            require("./server/static-server")(this.options, (error, server)=> {
-                if (error) {
-                    return reject(new Error("Fail setup server"));
-                }
-                this.server = server;
-                resolve();
-            });
+            this.serverEmitter.on("connection", resolve);
+            this.serverEmitter.on("error", reject);
+            var severImplement = require("./server/static-server");
+            severImplement(this.serverEmitter, this.options);
+            assert(this.serverEmitter.listeners("close").length > 0, `${severImplement.name} should implement emitter.on("close", function({ ... })`);
         });
     }
 
@@ -36,9 +37,7 @@ export default class ReftestEngine {
     }
 
     _closeServer() {
-        if (this.server) {
-            this.server.close();
-        }
+        this.serverEmitter.emit("close");
     }
 
     _computeResultOperator(result, compareOperator) {
