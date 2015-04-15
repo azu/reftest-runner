@@ -24,7 +24,7 @@ export default class ReftestRunner {
      * @param {IReftestOption} options
      */
     constructor(options) {
-        this.options = ObjectAssign(defaultOptions, options);
+        this.options = ObjectAssign(options, defaultOptions);
     }
 
     _openDriver() {
