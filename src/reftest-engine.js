@@ -5,16 +5,18 @@
     - engine is wrapped of runner.
  */
 import Promise from "bluebird"
-import ObjectAssign from "object-assign"
 import TestRunner from "./reftest-runner"
 import defaultOptions from "./options/default-options"
 import {EventEmitter} from "events"
 import assert from "assert"
-var debug = require("debug")("reftest-engine");
+import deepmerge from "deepmerge"
+
+var debug = require("debug")("reftest-runner:engine");
 export default class ReftestEngine {
     constructor(options) {
-        this.options = ObjectAssign(options, defaultOptions);
+        this.options = deepmerge(defaultOptions, options);
         this.serverEmitter = new EventEmitter();
+        debug("options : %o", this.options);
     }
 
     _setupServer() {

@@ -10,6 +10,10 @@ var defaultOptions = {
     "server": {
         "script": require("../server/static-server"),
         "port": 8991
+    },
+    // https://github.com/yahoo/blink-diff#object-usage
+    "blinkDiff": {
+        delta: 20
     }
 };
 module.exports = defaultOptions;

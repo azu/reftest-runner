@@ -13,8 +13,9 @@ import dateFormat from 'dateformat'
 import pathUtil from "./utils/path-utils.js"
 import mkdirp from "mkdirp"
 import ObjectAssign from "object-assign"
+import deepmerge from "deepmerge"
 import defaultOptions from "./options/default-options"
-
+var debug = require("debug")("reftest-runner:runner");
 /**
  * @constructor
  */
@@ -24,7 +25,7 @@ export default class ReftestRunner {
      * @param {IReftestOption} options
      */
     constructor(options) {
-        this.options = ObjectAssign(options, defaultOptions);
+        this.options = deepmerge(defaultOptions, options);
     }
 
     _openDriver() {
@@ -75,15 +76,14 @@ export default class ReftestRunner {
             var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
             // if exist screenshotDir, then create directory.
             mkdirp.sync(this.options.screenshotDir);
-            var diff = new BlinkDiff({
+            // shallow option merge
+            var blinkDiffOptions = ObjectAssign({}, {
                 imageA: new Buffer(imageA, 'base64'),
                 imageB: new Buffer(imageB, 'base64'),
-                delta: 10,
-                outputMaskRed: 0,
-                outputMaskBlue: 255, // Use blue for highlighting differences
-                hideShift: true, // Hide anti-aliasing differences - will still determine but not showing it
                 imageOutputPath: outputScreenshotPath
-            });
+            }, this.options.blinkDiff);
+            debug("blink-diff options: %o", blinkDiffOptions);
+            var diff = new BlinkDiff(blinkDiffOptions);
             diff.run(function (error, result) {
                 /**
                  * @type {IReftestCompareResult}
