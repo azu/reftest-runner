@@ -1,5 +1,6 @@
 declare module "reftest-runner" {
     interface IReftestServerOption {
+        script: Function;
         port : number;
     }
     interface IReftestOption {

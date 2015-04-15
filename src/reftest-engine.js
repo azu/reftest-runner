@@ -4,25 +4,32 @@
     - engine treat multiple files.
     - engine is wrapped of runner.
  */
-import TestRunner from "./reftest-runner"
 import Promise from "bluebird"
 import ObjectAssign from "object-assign"
+import TestRunner from "./reftest-runner"
 import defaultOptions from "./options/default-options"
+import {EventEmitter} from "events"
+import assert from "assert"
 var debug = require("debug")("reftest-engine");
 export default class ReftestEngine {
     constructor(options) {
-        this.options = ObjectAssign(defaultOptions, options);
+        this.options = ObjectAssign(options, defaultOptions);
+        this.serverEmitter = new EventEmitter();
     }
 
     _setupServer() {
+        if (!this.options.server || !this.options.server.script) {
+            return Promise.resolve();
+        }
+        if (typeof this.options.server.script !== "function") {
+            throw new Error("options.server.script should be function.");
+        }
         return new Promise((resolve, reject)=> {
-            require("./server/static-server")(this.options, (error, server)=> {
-                if (error) {
-                    return reject(new Error("Fail setup server"));
-                }
-                this.server = server;
-                resolve();
-            });
+            this.serverEmitter.once("connection", resolve);
+            this.serverEmitter.once("error", reject);
+            var severImplement = this.options.server.script;
+            severImplement(this.serverEmitter, this.options);
+            assert(this.serverEmitter.listeners("close").length > 0, `${severImplement.name} should implement emitter.on("close", function({ ... })`);
         });
     }
 
@@ -36,9 +43,8 @@ export default class ReftestEngine {
     }
 
     _closeServer() {
-        if (this.server) {
-            this.server.close();
-        }
+        this.serverEmitter.emit("close");
+        this.serverEmitter.removeAllListeners();
     }
 
     _computeResultOperator(result, compareOperator) {
