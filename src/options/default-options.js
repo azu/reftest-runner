@@ -13,7 +13,10 @@ var defaultOptions = {
     },
     // https://github.com/yahoo/blink-diff#object-usage
     "blinkDiff": {
-        delta: 20
+        delta: 20,
+        // Use blue for highlighting differences
+        outputMaskRed: 0,
+        outputMaskBlue: 255
     }
 };
 module.exports = defaultOptions;
