@@ -77,11 +77,12 @@ export default class ReftestRunner {
             // if exist screenshotDir, then create directory.
             mkdirp.sync(this.options.screenshotDir);
             // shallow option merge
-            var blinkDiffOptions = ObjectAssign({}, {
+            // priority: user defined options < program options
+            var blinkDiffOptions = ObjectAssign({}, this.options.blinkDiff, {
                 imageA: new Buffer(imageA, 'base64'),
                 imageB: new Buffer(imageB, 'base64'),
                 imageOutputPath: outputScreenshotPath
-            }, this.options.blinkDiff);
+            });
             debug("blink-diff options: %o", blinkDiffOptions);
             var diff = new BlinkDiff(blinkDiffOptions);
             diff.run(function (error, result) {
