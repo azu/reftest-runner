@@ -10,6 +10,13 @@ var defaultOptions = {
     "server": {
         "script": require("../server/static-server"),
         "port": 8991
+    },
+    // https://github.com/yahoo/blink-diff#object-usage
+    "blinkDiff": {
+        delta: 20,
+        // Use blue for highlighting differences
+        outputMaskRed: 0,
+        outputMaskBlue: 255
     }
 };
 module.exports = defaultOptions;
