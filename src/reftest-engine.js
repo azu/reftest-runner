@@ -50,6 +50,8 @@ export default class ReftestEngine {
     }
 
     _computeResultOperator(result, compareOperator) {
+        // assign
+        result.compareOperator = compareOperator;
         // reverser result
         if (compareOperator === "!=") {
             result.passed = !result.passed;
