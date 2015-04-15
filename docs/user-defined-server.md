@@ -2,7 +2,7 @@
 
 reftest-runner support user defined server.
 
-It's mean that you implement own server under the rule and reftest-runner can treat it as local server.
+It's mean that you could implement own server under the rule and reftest-runner treat it as local server.
 
 ## Rules
 
@@ -45,4 +45,26 @@ module.exports = function (emitter, options) {
     // finish setup callback
     emitter.emit("connection");
 };
+```
+
+## How to set option
+
+```
+import ReftestEngine from "./reftest-engine"
+import yourServer from "./yourServer"
+var testEngine = new ReftestEngine({
+    server: {
+        script: yourServer,
+        port: 8989
+    }
+});
+var reftestListPath = __dirname + "./test/reftest.list";
+var list = testEngine.getTargetListFromFile(reftestListPath);
+testEngine.runTests(list).then(function (resultList) {
+    var formatter = testEngine.getReporter();
+    var output = formatter(resultList);
+    console.log(output);
+}).catch((error)=> {
+    console.log(error.stack);
+});
 ```
