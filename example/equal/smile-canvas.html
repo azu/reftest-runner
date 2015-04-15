@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+</head>
+<body>
+<!--https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#Moving_the_pen-->
+<canvas id="canvas" width="300" height="300"></canvas>
+<script>
+    var canvas = document.getElementById('canvas');
+    if (canvas.getContext) {
+        var ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.arc(75, 75, 50, 0, Math.PI*2, true); // 外の円
+        ctx.moveTo(110,75);
+        ctx.arc(75,75,35,0,Math.PI,false);   // 口 (時計回り)
+        ctx.moveTo(65,65);
+        ctx.arc(60,65,5,0,Math.PI*2,true);  // 左目
+        ctx.moveTo(95,65);
+        ctx.arc(90,65,5,0,Math.PI*2,true);  // 右目
+        ctx.stroke();
+    }
+</script>
+</body>
+</html>
