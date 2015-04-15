@@ -13,7 +13,7 @@ module.exports = function (emitter, options) {
         request.addListener('end', function () {
             fileServer.serve(request, response, function (err, result) {
                 if (err) { // There was an error serving the file
-                    sys.error("Error serving " + request.url + " - " + err.message);
+                    console.error("Error serving " + request.url + " - " + err.message);
 
                     // Respond to the client
                     response.writeHead(err.status, err.headers);
@@ -23,8 +23,8 @@ module.exports = function (emitter, options) {
         }).resume();
     }).listen(options.server.port);
     // when reftest-runner emit "close", then sever should be closed.
-    emitter.on("close", function(){
-       server.close()
+    emitter.on("close", function () {
+        server.close()
     });
     // finish setup callback
     emitter.emit("connection");

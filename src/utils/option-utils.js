@@ -9,6 +9,7 @@ var path = require("path");
 function resolveTargetPath(target, option) {
     assert(option != null, "Need option");
     var root = option.rootDir;
+    // targetA|B is file path
     if (typeof option.server !== "undefined") {
         var absoluteA = path.resolve(root, target.targetA);
         var absoluteB = path.resolve(root, target.targetB);
