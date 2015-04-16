@@ -1,7 +1,7 @@
 // LICENSE : MIT
 "use strict";
 var path = require("path");
-var ReftestEngine = require("../lib/reftest-engine");
+var ReftestEngine = require("../").Engine;
 var testEngine = new ReftestEngine({
     server: {
         port: 8989
