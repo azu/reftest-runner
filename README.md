@@ -17,7 +17,7 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
 ## Installation
 
-- [ ] Describe the installation process
+    npm install reftest-runner
 
 ## Feature
 
@@ -33,7 +33,13 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
 ## Usage
 
-- [ ] Write usage instructions
+- [ ] document document
+
+- [Examples](example/)
+
+### Options
+
+- [User defined server](docs/user-defined-server.md)
 
 ## Tests
 

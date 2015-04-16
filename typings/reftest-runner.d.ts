@@ -8,8 +8,8 @@ declare module "reftest-runner" {
         port?: number;
         rootDir:string;
         server : IReftestServerOption;
-        logDir?: string;
         screenshotDir?: string;
+        blinkDiff?: Object;
     }
     interface IReftestURLResult {
         URL : string;
