@@ -14,6 +14,11 @@
   "version": "1.0.0",
   "description": "Reftests runner with WebDriver API.",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "docs",
+    "typings"
+  ],
   "scripts": {
     "build": "babel src --out-dir lib --source-maps --loose es6.classes",
     "watch": "babel src --out-dir lib --watch --source-maps --loose es6.classes",
