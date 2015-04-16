@@ -34,7 +34,6 @@
   ],
   "devDependencies": {
     "babel": "^5.0.12",
-    "blink-diff": "^1.0.9",
     "espower-loader": "^0.10.0",
     "http-server": "^0.8.0",
     "intelli-espower-loader": "^0.6.0",
