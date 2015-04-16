@@ -17,7 +17,7 @@ function outputDiagnostics(diagnostic) {
 module.exports = function (results) {
     var output = "TAP version 13\n1.." + results.length + "\n";
     results.forEach(function (result/*@type {IReftestCompareResult}*/, id) {
-        var title = result.targetA.URL + " vs " + result.targetB.URL;
+        var title = result.targetA.URL + " " + result.compareOperator + " " + result.targetB.URL;
         if (result.passed) {
             output += "ok" + " " + (id + 1) + " - " + title + "\n";
             return;

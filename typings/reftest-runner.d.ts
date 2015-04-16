@@ -8,8 +8,8 @@ declare module "reftest-runner" {
         port?: number;
         rootDir:string;
         server : IReftestServerOption;
-        logDir?: string;
         screenshotDir?: string;
+        blinkDiff?: Object;
     }
     interface IReftestURLResult {
         URL : string;
@@ -17,6 +17,7 @@ declare module "reftest-runner" {
     }
     interface IReftestCompareResult {
         passed : boolean;
+        compareOperator: string;
         differencePoints : number;
         comparedImagePath? : string;
         targetA: IReftestURLResult;

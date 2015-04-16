@@ -13,11 +13,11 @@
   },
   "version": "1.0.0",
   "description": "Reftests runner with WebDriver API.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "babel src --out-dir lib --source-maps --loose es6.classes",
     "watch": "babel src --out-dir lib --watch --source-maps --loose es6.classes",
-    "test": "npm run build && mocha test"
+    "test": "npm run build && mocha test && node example/example.js"
   },
   "keywords": [
     "testing",
