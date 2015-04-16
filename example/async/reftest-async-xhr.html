@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!-- wait until class="reftest-wait" is empty string-->
+<html class="reftest-wait">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<pre id="log"></pre>
+<script>
+    var req = new XMLHttpRequest();
+    req.open("get", "./test.txt", false);
+    req.onload = function (event) {
+        var responseText = req.responseText;
+        document.getElementById("log").textContent = responseText;
+        // complete
+        document.documentElement.className = "";
+    };
+    req.send();
+</script>
+</body>
+</html>
