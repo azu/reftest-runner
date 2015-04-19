@@ -1,0 +1,15 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "bluebird/bluebird.d.ts": {
+      "commit": "e57df787f4e11601625d7e1c1b2ee351b97a18a1"
+    },
+    "selenium-webdriver/selenium-webdriver.d.ts": {
+      "commit": "e57df787f4e11601625d7e1c1b2ee351b97a18a1"
+    }
+  }
+}

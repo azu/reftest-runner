@@ -1,3 +1,6 @@
+/// <reference path="../bluebird/bluebird.d.ts"/>
+/// <reference path="../selenium-webdriver/selenium-webdriver.d.ts"/>
+
 declare module "reftest-runner" {
     interface IReftestServerOption {
         script: Function;
@@ -28,7 +31,16 @@ declare module "reftest-runner" {
         targetB: string;
         compareOperator: string;
     }
+    interface IReftestForRunningTarget {
+        URL : string;
+        capabilities?: webdriver.Capabilities|Object;
+    }
     export class ReftestRunner {
         constructor(options:IReftestOption);
+
+        runTest<T>(URL_A:string, URL_B:string):Promise<T>;
+
+        runTestWithTargets<T>(targetA:IReftestForRunningTarget, targetB:IReftestForRunningTarget):Promise<T>;
     }
+
 }

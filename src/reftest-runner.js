@@ -116,7 +116,7 @@ export default class ReftestRunner {
     }
 
     /**
-     * Compare A and B screenshot.
+     * Compare the result of A and B and return promise.
      * @param {string} URL_A the target URL A
      * @param {string} URL_B the target URL B
      * @returns {Promise.<T>}
@@ -133,9 +133,29 @@ export default class ReftestRunner {
                     screenshotBase64: result[1]
                 }
             });
-        }).catch(function (error) {
-            console.log(error);
-            console.log(error.stack);
+        });
+    }
+
+    /**
+     * Compare the result of A and B and return promise.
+     * @param {IReftestForRunningTarget} targetA
+     * @param {IReftestForRunningTarget} targetB
+     * @returns {Promise.<T>}
+     */
+    runTestWithTargets(targetA, targetB) {
+        var resultA = this._runTestURL(targetA.URL, targetA.capabilities);
+        var resultB = this._runTestURL(targetB.URL, targetB.capabilities);
+        return Promise.all([resultA, resultB]).then((result) => {
+            return this._compareResult({
+                targetA: {
+                    URL: targetA.URL,
+                    screenshotBase64: result[0]
+                },
+                targetB: {
+                    URL: targetB.URL,
+                    screenshotBase64: result[1]
+                }
+            });
         });
     }
 }
