@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/azu/reftest-runner/issues"
   },
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Reftests runner with WebDriver API.",
   "main": "lib/index.js",
   "bin": {
