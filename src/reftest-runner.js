@@ -29,9 +29,9 @@ export default class ReftestRunner {
     }
 
     _openDriver() {
-        var options = webdriver.Capabilities.phantomjs();
+        var browserName = this.options.browser;
         return new webdriver.Builder()
-            .withCapabilities(options)
+            .forBrowser(browserName)
             .build();
     }
 

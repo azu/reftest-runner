@@ -5,8 +5,9 @@
  * @type {IReftestOption}
  */
 var defaultOptions = {
-    rootDir: process.cwd(),
-    screenshotDir: process.cwd() + "/logs/",
+    "rootDir": process.cwd(),
+    "screenshotDir": process.cwd() + "/logs/",
+    "browser": "phantomjs",
     "server": {
         "script": require("../server/static-server"),
         "port": 8991
