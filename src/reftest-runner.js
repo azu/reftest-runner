@@ -28,10 +28,16 @@ export default class ReftestRunner {
         this.options = deepmerge(defaultOptions, options);
     }
 
-    _openDriver() {
-        var browserName = this.options.browser;
+    /**
+     * build webdriver with capabilities option and return webdriver object.
+     * @param {webdriver.Capabilities} capabilities
+     * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
+     * @returns {!webdriver.WebDriver}
+     * @private
+     */
+    _openDriver(capabilities) {
         return new webdriver.Builder()
-            .forBrowser(browserName)
+            .withCapabilities(capabilities)
             .build();
     }
 
@@ -40,13 +46,21 @@ export default class ReftestRunner {
     }
 
     /**
-     *
+     * run selenium-webdriver with capabilities options to URL and return promise object.
      * @param URL
+     * @param {webdriver.Capabilities} capabilities? the capabilities object is defined by selenium-webdriver.
+     * https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
      * @returns {Promise.<T>}
      * @private
      */
-    _runTestURL(URL) {
-        var driver = this._openDriver();
+    _runTestURL(URL, capabilities) {
+        var runningCapabilities = {
+            browserName: this.options.browser
+        };
+        if (typeof capabilities === "object") {
+            runningCapabilities = capabilities
+        }
+        var driver = this._openDriver(runningCapabilities);
         var contentRunner = new ContentRunner(driver);
         var close = (result)=> {
             if (result instanceof Error) {
