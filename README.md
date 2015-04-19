@@ -13,7 +13,7 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
 - [Writing Reftests | Test the Web Forward](http://testthewebforward.org/docs/reftests.html)
 - [Creating reftest-based unit tests | MDN](https://developer.mozilla.org/en-US/docs/Creating_reftest-based_unit_tests)
-
+- [Reftest Overview](http://adobe.github.io/web-platform/presentations/testtwf-how-to-write-a-reftest/#/1 "Reftest Overview")
 
 ## Installation
 
@@ -21,21 +21,46 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
 ## Feature
 
-- Compare compares the visual output of HTMLs.
+- Compare the visual output of HTMLs.
     - for testing Canvas, HTML, CSS etc..
+- Compare the visual output of browsers.
+    - e.g.) Firefox vs Chrome.
 - Output diff image
     - mismatch the visual, then output diff image of these.
 - `reftest.list` support
     - [azu/reftest-list-parser](https://github.com/azu/reftest-list-parser "azu/reftest-list-parser")
-    - LIMIT: not support `link rel=match`
 - WebDriver API support
     - This tools running on Firefox/Chrome/IE/PhantomJS and more?
 
 ## Usage
 
-- [ ] document document
+### Command line
 
-- [Examples](example/)
+If you want to compare `path/to/fileA.html` and `path/to/fileB.html` using phantomjs.
+
+```sh
+$ reftest-runner --browser "phantomjs" --targetA path/to/fileA.html --targetB path/to/fileB.html
+```
+
+Command line interface is limited.
+
+if you want to flexibility, please suggestion to issue or use it as node modules.
+
+### Node modules
+
+`reftest-runner` export `Engine` and `Runner`.
+
+- `Engine` is wrapper of `Runner` for treating multiple files and using local server...
+- `Runner` is core module.
+
+```js
+module.exports = {
+    Engine: require("./reftest-engine"),
+    Runner: require("./reftest-runner")
+};
+```
+
+Please see [Examples](example/).
 
 ### Options
 

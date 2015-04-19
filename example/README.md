@@ -16,3 +16,39 @@ Write [reftest.list](reftest.list)
 ## How to write async test?
 
 See [async](async/) example
+
+## How to test between Firefox and Chrome?
+
+See `reftestPhantomJSAndFirefox` of example
+
+```js
+function reftestPhantomJSAndFirefox() {
+    var listWithBrowserCapabilities = [
+        {
+            compareOperator: "==",
+            targetA: {
+                URL: "./equal/smile-canvas.html",
+                capabilities: {// <= selenium-webdriver options
+                    browserName: "chrome"
+                }
+            },
+            targetB: {
+                URL: "./equal/smile-canvas.html",
+                capabilities: {
+                    browserName: "firefox"
+                }
+            }
+        }
+    ];
+    return testEngine.runTests(listWithBrowserCapabilities).then(function (resultList) {
+        var formatter = testEngine.getReporter();
+        var output = formatter(resultList);
+        console.log(output);
+        if (!allPassed(resultList)) {
+            return Promise.reject(new Error("FAIL"));
+        }
+    });
+}
+```
+
+`runTestWithTargets` method of `reftest-runner.js` is the core.
