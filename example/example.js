@@ -1,6 +1,7 @@
 // LICENSE : MIT
 "use strict";
 var path = require("path");
+var Promise = require("bluebird");
 var ReftestEngine = require("../").Engine;
 var testEngine = new ReftestEngine({
     server: {
@@ -13,16 +14,66 @@ function allPassed(resultList) {
         return result.passed;
     });
 }
+
+// run test with reftest.list
+function reftestWithList(reftestListPath) {
+    var list = testEngine.getTargetListFromFile(reftestListPath);
+    return testEngine.runTests(list).then(function (resultList) {
+        var formatter = testEngine.getReporter();
+        var output = formatter(resultList);
+        console.log(output);
+        if (!allPassed(resultList)) {
+            return Promise.reject(new Error("FAIL"));
+        }
+    });
+}
+
+function reftestPhantomJSAndFirefox() {
+    var listWithBrowserCapabilities = [
+        {
+            compareOperator: "==",
+            targetA: {
+                URL: "./equal/smile-canvas.html",
+                capabilities: {
+                    browserName: "phantomjs"
+                }
+            },
+            targetB: {
+                URL: "./equal/smile-canvas.html",
+                capabilities: {
+                    browserName: "firefox"
+                }
+            }
+        },
+        {
+            compareOperator: "!=",
+            targetA: {
+                URL: "./non-equal/canvas-left.html",
+                capabilities: {
+                    browserName: "phantomjs"
+                }
+            },
+            targetB: {
+                URL: "./non-equal/canvas-right.html",
+                capabilities: {
+                    browserName: "firefox"
+                }
+            }
+        }
+    ];
+    return testEngine.runTests(listWithBrowserCapabilities).then(function (resultList) {
+        var formatter = testEngine.getReporter();
+        var output = formatter(resultList);
+        console.log(output);
+        if (!allPassed(resultList)) {
+            return Promise.reject(new Error("FAIL"));
+        }
+    });
+}
+
 var reftestListPath = path.join(__dirname, "reftest.list");
-var list = testEngine.getTargetListFromFile(reftestListPath);
-testEngine.runTests(list).then(function (resultList) {
-    var formatter = testEngine.getReporter();
-    var output = formatter(resultList);
-    console.log(output);
-    if (!allPassed(resultList)) {
-        process.exit(1);
-    }
+reftestWithList(reftestListPath).then(function () {
+    return reftestPhantomJSAndFirefox();
 }).catch(function (error) {
-    console.log(error.stack);
-    process.exit(1);
+    console.error(error);
 });

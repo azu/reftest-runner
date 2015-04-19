@@ -27,8 +27,8 @@ declare module "reftest-runner" {
         targetB: IReftestURLResult;
     }
     interface IReftestEngineTarget {
-        targetA: string;
-        targetB: string;
+        targetA: string|IReftestForRunningTarget;
+        targetB: string|IReftestForRunningTarget;
         compareOperator: string;
     }
     interface IReftestForRunningTarget {

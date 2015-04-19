@@ -83,10 +83,10 @@ export default class ReftestEngine {
      */
     runTests(testTargetList) {
         var close = (result)=> {
+            this._closeServer();
             if (result instanceof Error) {
                 return Promise.reject(result);
             }
-            this._closeServer();
             return result;
         };
         var resolve = require("./utils/option-utils").resolveTargetPath;
@@ -107,8 +107,14 @@ export default class ReftestEngine {
      */
     _runTests(testTargetList) {
         var runner = new TestRunner(this.options);
+        var isRunningTarget = require("./utils/option-utils").isRunningTarget;
         var taskPromiseList = testTargetList.map(function (testTarget) {
-            return runner.runTest(testTarget.targetA, testTarget.targetB)
+            if (isRunningTarget(testTarget)) {
+                // IReftestForRunningTarget
+                return runner.runTestWithTargets(testTarget.targetA, testTarget.targetB)
+            } else {
+                return runner.runTest(testTarget.targetA, testTarget.targetB)
+            }
         });
         return Promise.all(taskPromiseList).then((resultList) => {
             return resultList.map((result, index) => {

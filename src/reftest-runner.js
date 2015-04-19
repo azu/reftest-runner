@@ -26,6 +26,8 @@ export default class ReftestRunner {
      */
     constructor(options) {
         this.options = deepmerge(defaultOptions, options);
+        // static
+        this.constructor.testCount = 0;
     }
 
     /**
@@ -85,8 +87,9 @@ export default class ReftestRunner {
         var imageB = targetSet.targetB.screenshotBase64;
         return new Promise((resolve, reject) => {
             var prefix = dateFormat(new Date(), "yyyy_mm_dd__HH-MM-ss");
+            var suffix = ++this.constructor.testCount;
             var vsTitle = pathUtil.basename(targetSet.targetA.URL) + "-vs-" + pathUtil.basename(targetSet.targetB.URL);
-            var fileName = prefix + "-" + vsTitle + ".png";
+            var fileName = prefix + "-" + vsTitle + suffix + ".png";
             var outputScreenshotPath = path.join(this.options.screenshotDir, fileName);
             // if exist screenshotDir, then create directory.
             mkdirp.sync(this.options.screenshotDir);
