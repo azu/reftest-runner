@@ -3,6 +3,7 @@
 var Promise = require("bluebird");
 var options = require("./cli-options");
 var ReftestEngine = require("../").Engine;
+var path = require("path");
 var debug = require("debug")("reftest-runner:cli");
 
 /**
@@ -49,6 +50,7 @@ var cli = {
             debug("CLI options %@", currentOptions);
             var engine = new ReftestEngine(translateOptions(currentOptions));
             if (currentOptions.list) {
+                var reftestListPath = path.join(process.cwd(), currentOptions.list);
                 var list = engine.getTargetListFromFile(reftestListPath);
                 return engine.runTests(list).then(function (result) {
                     var output = printResult(engine, result);
@@ -76,7 +78,7 @@ var cli = {
                     resolve([allPassed(result) ? 0 : 1, output]);
                 })).catch(reject);
             } else {
-                return reject(new Error("have to set test target by --list or --targetA and --targetB"));
+                return resolve(options.generateHelp());
             }
         });
     }
