@@ -50,6 +50,7 @@ var cli = {
             debug("CLI options %@", currentOptions);
             var engine = new ReftestEngine(translateOptions(currentOptions));
             if (currentOptions.list) {
+                // prefer --list > targetA/targetB
                 var reftestListPath = path.join(process.cwd(), currentOptions.list);
                 var list = engine.getTargetListFromFile(reftestListPath);
                 return engine.runTests(list).then(function (result) {
