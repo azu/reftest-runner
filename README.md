@@ -2,7 +2,7 @@
 
 A visual testing tool for Browser(HTML).
 
-![overview](./doc/reftest-runner-overview-image.png)
+![overview](./docs/reftest-runner-overview-image.png)
 
 from [reftest-runner-overview.pdf](./docs/reftest-runner-overview.pdf).
 
@@ -32,6 +32,7 @@ reftest-runner concept is the same, but use it with any browser that supported W
     - e.g.) Firefox vs Chrome.
 - Output diff image
     - mismatch the visual, then output diff image of these.
+- Output test result as TAP format.
 - `reftest.list` support
     - [azu/reftest-list-parser](https://github.com/azu/reftest-list-parser "azu/reftest-list-parser")
 - WebDriver API support
@@ -47,11 +48,38 @@ If you want to compare `path/to/fileA.html` and `path/to/fileB.html` using phant
 $ reftest-runner --browser "phantomjs" --targetA path/to/fileA.html --targetB path/to/fileB.html
 ```
 
+also use `reftest.lit` file for test.
+
+```
+$ reftest-runner --list path/to/reftest.list
+```
+
+You can view about `reftest.list` format on [azu/reftest-list-parser](https://github.com/azu/reftest-list-parser "azu/reftest-list-parser").
+
+
+#### Command line help
+
+```sh
+reftest-runner [options]
+
+Options:
+  -h, --help                Show help
+  -l, --list path::String   Use reftest list from this file
+  --targetA path::String    Use a specific test html file
+  --targetB path::String    Use a specific test html file
+  -v, --version             Outputs the version number
+  -b, --browser String      Specify Browser - default: phantomjs
+  --compareOperator String  Specify compareOperator. == OR != - default: ==
+```
+
+
 Command line interface is limited.
 
 if you want to flexibility, please suggestion to issue or use it as node modules.
 
 ### Node modules
+
+Please see the [Examples](example/).
 
 `reftest-runner` export `Engine` and `Runner`.
 
@@ -65,11 +93,49 @@ module.exports = {
 };
 ```
 
-Please see [Examples](example/).
+Example: Programmatic run test with reftest.list
 
-### Options
+```js
+var path = require("path");
+var Promise = require("bluebird");
+var ReftestEngine = require("reftest-runner").Engine;
+var testEngine = new ReftestEngine({
+    server: {
+        port: 8989
+    },
+    rootDir: __dirname
+});
+function allPassed(resultList) {
+    return resultList.every(function (result) {
+        return result.passed;
+    });
+}
 
-- [User defined server](docs/user-defined-server.md)
+// run test with reftest.list
+function reftestWithList(reftestListPath) {
+    var list = testEngine.getTargetListFromFile(reftestListPath);
+    return testEngine.runTests(list).then(function (resultList) {
+        var formatter = testEngine.getReporter();
+        var output = formatter(resultList);
+        console.log(output);
+        if (!allPassed(resultList)) {
+            return Promise.reject(new Error("FAIL"));
+        }
+    });
+}
+
+var reftestListPath = path.join(__dirname, "reftest.list");
+reftestWithList(reftestListPath).catch(function (error) {
+    console.error(error.message);
+    console.error(error.stack);
+});
+```
+
+
+
+### Programmatic usage document
+
+Please see the [docs/](docs/)
 
 ## Tests
 
