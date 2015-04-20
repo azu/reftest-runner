@@ -42,6 +42,8 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
 ### Command line
 
+    npm install reftest-runner -g
+
 If you want to compare `path/to/fileA.html` and `path/to/fileB.html` using phantomjs.
 
 ```sh
