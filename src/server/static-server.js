@@ -2,6 +2,7 @@
 "use strict";
 var staticServer = require('node-static');
 var assert = require("assert");
+var debug = require("debug")("reftest-runner:server");
 /**
  * @param {EventEmitter} emitter
  * @param {IReftestOption} options
@@ -13,7 +14,7 @@ module.exports = function (emitter, options) {
         request.addListener('end', function () {
             fileServer.serve(request, response, function (err, result) {
                 if (err) { // There was an error serving the file
-                    console.error("Error serving " + request.url + " - " + err.message);
+                    debug("Error serving " + request.url + " - " + err.message);
 
                     // Respond to the client
                     response.writeHead(err.status, err.headers);
