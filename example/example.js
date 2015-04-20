@@ -7,7 +7,11 @@ var testEngine = new ReftestEngine({
     server: {
         port: 8989
     },
-    rootDir: __dirname
+    rootDir: __dirname,
+    blinkDiff: {
+        composeLeftToRight: true,
+        composition: true
+    }
 });
 function allPassed(resultList) {
     return resultList.every(function (result) {
@@ -75,5 +79,6 @@ var reftestListPath = path.join(__dirname, "reftest.list");
 reftestWithList(reftestListPath).then(function () {
     return reftestPhantomJSAndFirefox();
 }).catch(function (error) {
-    console.error(error);
+    console.error(error.message);
+    console.error(error.stack);
 });

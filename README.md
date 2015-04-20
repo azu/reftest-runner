@@ -2,6 +2,11 @@
 
 A visual testing tool for Browser(HTML).
 
+![overview](./doc/reftest-runner-overview-image.png)
+
+from [reftest-runner-overview.pdf](./docs/reftest-runner-overview.pdf).
+
+
 reftest-runner is similar testing tools to [Layout Engine Visual Tests (reftest)](http://mxr.mozilla.org/mozilla-central/source/layout/tools/reftest/README.txt "Layout Engine Visual Tests (reftest)").
 
 [Layout Engine Visual Tests (reftest)](http://mxr.mozilla.org/mozilla-central/source/layout/tools/reftest/README.txt "Layout Engine Visual Tests (reftest)") is adopted major browser Firefox, Chrome, Safari etc.
