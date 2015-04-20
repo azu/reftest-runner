@@ -60,7 +60,7 @@ var cli = {
             } else if (currentOptions.targetA && currentOptions.targetB) {
                 return engine.runTests([
                     {
-                        compareOperator: currentOptions.compare,
+                        compareOperator: currentOptions.compareOperator,
                         targetA: {
                             URL: currentOptions.targetA,
                             capabilities: {

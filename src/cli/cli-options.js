@@ -38,7 +38,7 @@ module.exports = optionator({
             default: "phantomjs",
             description: "Specify Browser"
         }, {
-            option: "compare",
+            option: "compareOperator",
             type: "String",
             default: "==",
             description: "Specify compareOperator. == OR !="
