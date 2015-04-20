@@ -17,7 +17,7 @@ module.exports = optionator({
             option: "list",
             alias: "l",
             type: "path::String",
-            description: "Use reftest.list from this file"
+            description: "Use reftest list from this file"
         }, {
             option: "targetA",
             type: "path::String",
