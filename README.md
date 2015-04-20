@@ -81,7 +81,7 @@ if you want to flexibility, please suggestion to issue or use it as node modules
 
 ### Node modules
 
-Please see the [Examples](example/).
+Please see the [Examples](example/). :bulb:
 
 `reftest-runner` export `Engine` and `Runner`.
 
@@ -137,7 +137,7 @@ reftestWithList(reftestListPath).catch(function (error) {
 
 ### Programmatic usage document
 
-Please see the [docs/](docs/)
+Please see the [docs/](docs/) :bulb:
 
 ## Tests
 
