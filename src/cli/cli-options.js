@@ -2,7 +2,7 @@
 "use strict";
 var optionator = require("optionator");
 module.exports = optionator({
-    prepend: "eslint [options] file.js [file.js] [dir]",
+    prepend: "reftest-runner [options]",
     concatRepeatedArrays: true,
     mergeRepeatedObjects: true,
     options: [
