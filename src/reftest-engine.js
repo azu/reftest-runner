@@ -16,6 +16,7 @@ export default class ReftestEngine {
     constructor(options) {
         this.options = deepmerge(defaultOptions, options);
         this.serverEmitter = new EventEmitter();
+        process.setMaxListeners(100);
         debug("options : %o", this.options);
     }
 
