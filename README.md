@@ -101,6 +101,9 @@ Example: Programmatic run test with reftest.list
 var path = require("path");
 var Promise = require("bluebird");
 var ReftestEngine = require("reftest-runner").Engine;
+// options
+// see https://github.com/azu/reftest-runner/blob/master/typings/reftest-runner/reftest-runner.d.ts
+//     https://github.com/azu/reftest-runner/blob/master/src/options/default-options.js
 var testEngine = new ReftestEngine({
     server: {
         port: 8989
