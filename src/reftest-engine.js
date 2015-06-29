@@ -31,10 +31,11 @@ export default class ReftestEngine {
         return new Promise((resolve, reject)=> {
             this.serverEmitter.once("connection", ()=>{
                 this.serverEmitter.removeAllListeners("error");
+                resolve();
             });
             this.serverEmitter.once("error", (error)=>{
-                reject(error);
                 this.serverEmitter.removeAllListeners("connection");
+                reject(error);
             });
             var severImplement = this.options.server.script;
             severImplement(this.serverEmitter, this.options);
