@@ -59,7 +59,7 @@ export default class ReftestRunner {
         var runningCapabilities = {
             browserName: this.options.browser
         };
-        if (typeof capabilities === "object") {
+        if (capabilities) {
             runningCapabilities = capabilities
         }
         var driver = this._openDriver(runningCapabilities);
