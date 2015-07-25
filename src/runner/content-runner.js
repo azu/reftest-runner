@@ -1,5 +1,6 @@
 // LICENSE : MIT
 "use strict";
+var debug = require("debug")("reftest-runner:content-runner");
 import Webdriver from "selenium-webdriver"
 export default class ContentRunner {
     constructor(driver, options) {
@@ -35,6 +36,7 @@ export default class ContentRunner {
     goToURL(URL) {
         var driver = this.driver;
         driver.get(URL);
+        debug(URL);
         return this;
     }
 
