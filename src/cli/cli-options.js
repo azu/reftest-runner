@@ -42,6 +42,10 @@ module.exports = optionator({
             type: "String",
             default: "==",
             description: "Specify compareOperator. == OR !="
+        }, {
+            option: "useExternalServer",
+            type: "Boolean",
+            description: "Use external server url"
         }
     ]
 });

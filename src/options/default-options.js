@@ -18,6 +18,7 @@ var defaultOptions = {
         // Use blue for highlighting differences
         outputMaskRed: 0,
         outputMaskBlue: 255
-    }
+    },
+    "useExternalServer": false
 };
 module.exports = defaultOptions;

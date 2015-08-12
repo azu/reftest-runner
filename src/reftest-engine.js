@@ -91,20 +91,29 @@ export default class ReftestEngine {
      */
     runTests(testTargetList) {
         var close = (result)=> {
-            this._closeServer();
+            if (!this.options.useExternalServer){
+                this._closeServer();
+            }
             if (result instanceof Error) {
                 return Promise.reject(result);
             }
             return result;
         };
-        var resolve = require("./utils/option-utils").resolveTargetPath;
-        var resolvedTargetList = testTargetList.map((target)=> {
-            return resolve(target, this.options);
-        });
-        debug("TargetList: %o", testTargetList);
-        return this._setupServer()
-            .then(this._runTests.bind(this, resolvedTargetList))
-            .then(close, close);
+
+        if (this.options.useExternalServer){
+            debug("TargetList: %o", testTargetList);
+            return this._runTests(testTargetList)
+                .then(close, close);
+        } else {
+            var resolve = require("./utils/option-utils").resolveTargetPath;
+            var resolvedTargetList = testTargetList.map((target)=> {
+                return resolve(target, this.options);
+            });
+            debug("TargetList: %o", testTargetList);
+            return this._setupServer()
+                .then(this._runTests.bind(this, resolvedTargetList))
+                .then(close, close);
+        }
     }
 
     /**

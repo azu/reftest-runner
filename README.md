@@ -72,6 +72,7 @@ Options:
   -v, --version             Outputs the version number
   -b, --browser String      Specify Browser - default: phantomjs
   --compareOperator String  Specify compareOperator. == OR != - default: ==
+  --useExternalServer       Use external server url
 ```
 
 

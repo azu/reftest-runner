@@ -13,7 +13,8 @@ var debug = require("debug")("reftest-runner:cli");
  */
 function translateOptions(cliOptions) {
     return {
-        browser: cliOptions.browser
+        browser: cliOptions.browser,
+        useExternalServer: cliOptions.useExternalServer
     }
 }
 
