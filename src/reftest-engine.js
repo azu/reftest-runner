@@ -100,8 +100,8 @@ export default class ReftestEngine {
             return result;
         };
 
+        debug("TargetList: %o", testTargetList);
         if (this.options.useExternalServer){
-            debug("TargetList: %o", testTargetList);
             return this._runTests(testTargetList)
                 .then(close, close);
         } else {
@@ -109,7 +109,6 @@ export default class ReftestEngine {
             var resolvedTargetList = testTargetList.map((target)=> {
                 return resolve(target, this.options);
             });
-            debug("TargetList: %o", testTargetList);
             return this._setupServer()
                 .then(this._runTests.bind(this, resolvedTargetList))
                 .then(close, close);
