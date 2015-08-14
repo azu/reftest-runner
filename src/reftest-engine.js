@@ -97,14 +97,20 @@ export default class ReftestEngine {
             }
             return result;
         };
-        var resolve = require("./utils/option-utils").resolveTargetPath;
-        var resolvedTargetList = testTargetList.map((target)=> {
-            return resolve(target, this.options);
-        });
+
         debug("TargetList: %o", testTargetList);
-        return this._setupServer()
-            .then(this._runTests.bind(this, resolvedTargetList))
-            .then(close, close);
+        if (this.options.useExternalServer){
+            return this._runTests(testTargetList)
+                .then(close, close);
+        } else {
+            var resolve = require("./utils/option-utils").resolveTargetPath;
+            var resolvedTargetList = testTargetList.map((target)=> {
+                return resolve(target, this.options);
+            });
+            return this._setupServer()
+                .then(this._runTests.bind(this, resolvedTargetList))
+                .then(close, close);
+        }
     }
 
     /**
