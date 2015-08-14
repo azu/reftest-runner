@@ -91,9 +91,7 @@ export default class ReftestEngine {
      */
     runTests(testTargetList) {
         var close = (result)=> {
-            if (!this.options.useExternalServer){
-                this._closeServer();
-            }
+            this._closeServer();
             if (result instanceof Error) {
                 return Promise.reject(result);
             }
