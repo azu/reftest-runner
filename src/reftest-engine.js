@@ -74,6 +74,11 @@ export default class ReftestEngine {
         var path = require("path");
         var data = fs.readFileSync(reftestListFilePath, "utf-8");
         var list = parse(data);
+
+        if (this.options.useExternalServer){
+            return list;
+        }
+
         var baseDir = path.dirname(reftestListFilePath);
         // resolve path from `rootDir`
         return list.map((item)=> {
