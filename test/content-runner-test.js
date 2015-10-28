@@ -1,6 +1,6 @@
 // LICENSE : MIT
 "use strict";
-var ContentRunner = require("../lib/runner/content-runner");
+var ContentRunner = require("../src/runner/content-runner");
 var assert = require("power-assert");
 var helper = require("./helper");
 describe("ContentRunner", function () {

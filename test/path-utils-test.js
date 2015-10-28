@@ -1,6 +1,6 @@
 // LICENSE : MIT
 "use strict";
-var pathUtils = require("../lib/utils/path-utils");
+var pathUtils = require("../src/utils/path-utils");
 var assert = require("power-assert");
 describe("pathUtils", function () {
     describe("#basename", function () {

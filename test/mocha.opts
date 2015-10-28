@@ -1,2 +1,2 @@
---require intelli-espower-loader
+--compilers js:espower-babel/guess
 --timeout 10000
