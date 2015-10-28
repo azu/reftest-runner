@@ -24,6 +24,8 @@ reftest-runner concept is the same, but use it with any browser that supported W
 
     npm install reftest-runner
 
+Require Node.js v4 >=
+
 ## Feature
 
 - Compare the visual output of HTMLs.
