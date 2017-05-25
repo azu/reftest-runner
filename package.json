@@ -41,7 +41,7 @@
     "espower-babel": "^3.3.0",
     "http-server": "^0.8.0",
     "mocha": "^2.2.4",
-    "phantomjs": "^1.9.16",
+    "phantomjs-prebuilt": "^2.1.14",
     "power-assert": "^1.1.0"
   },
   "dependencies": {
@@ -58,6 +58,6 @@
     "optionator": "^0.6.0",
     "reftest-list-parser": "^1.0.1",
     "selenium-download": "^2.0.0",
-    "selenium-webdriver": "^2.45.1"
+    "selenium-webdriver": "^3.0.0"
   }
 }
