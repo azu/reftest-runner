@@ -32,7 +32,7 @@ function reftestWithList(reftestListPath) {
     });
 }
 
-function reftestPhantomJSAndFirefox() {
+function reftestPhantomJSAndChrome() {
     var listWithBrowserCapabilities = [
         {
             compareOperator: "==",
@@ -77,7 +77,7 @@ function reftestPhantomJSAndFirefox() {
 
 var reftestListPath = path.join(__dirname, "reftest.list");
 reftestWithList(reftestListPath).then(function () {
-    return reftestPhantomJSAndFirefox();
+    return reftestPhantomJSAndChrome();
 }).catch(function (error) {
     console.error(error.message);
     console.error(error.stack);
