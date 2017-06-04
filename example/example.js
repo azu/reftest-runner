@@ -45,7 +45,7 @@ function reftestPhantomJSAndFirefox() {
             targetB: {
                 URL: "./equal/smile-canvas.html",
                 capabilities: {
-                    browserName: "firefox"
+                    browserName: "chrome"
                 }
             }
         },
@@ -60,7 +60,7 @@ function reftestPhantomJSAndFirefox() {
             targetB: {
                 URL: "./non-equal/canvas-right.html",
                 capabilities: {
-                    browserName: "firefox"
+                    browserName: "chrome"
                 }
             }
         }
