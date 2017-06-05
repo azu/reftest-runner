@@ -19,7 +19,7 @@ var debug = require("debug")("reftest-runner:runner");
 /**
  * @constructor
  */
-export default class ReftestRunner {
+module.exports = class ReftestRunner {
     /**
      *
      * @param {IReftestOption} options

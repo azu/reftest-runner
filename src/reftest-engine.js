@@ -10,9 +10,9 @@ import defaultOptions from "./options/default-options"
 import {EventEmitter} from "events"
 import assert from "assert"
 import deepmerge from "deepmerge"
-
 var debug = require("debug")("reftest-runner:engine");
-export default class ReftestEngine {
+
+module.exports = class ReftestEngine {
     constructor(options) {
         this.options = deepmerge(defaultOptions, options);
         this.serverEmitter = new EventEmitter();
