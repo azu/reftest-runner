@@ -1,2 +1,2 @@
---compilers js:espower-babel/guess
+--compilers js:babel-register
 --timeout 10000
